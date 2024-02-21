@@ -1,24 +1,25 @@
 {
-  "name": "-NODEJS",
+  "name": "noderest",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "format": "prettier --write *.js",
     "start": "node index.js",
-    "dev": "nodemon index.js",
-    "format": "prettier --write *.js"
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^3.0.2",
-    "prettier": "^3.1.1"
+    "prettier": "^3.2.5"
   },
   "dependencies": {
-    "dotenv": "^16.3.1",
+    "dotenv": "^16.4.1",
     "express": "^4.18.2",
     "sequelize": "^6.36.0",
+    "sqlite": "^5.1.1",
     "sqlite3": "5.0.2"
   }
 }
