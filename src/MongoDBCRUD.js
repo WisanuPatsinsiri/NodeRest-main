@@ -1,35 +1,16 @@
-//Description : Node Express Rest API with Sequelize and SQLite CRUD Book
-//npm Install express sequlize sqlite3
-//Run this file with node sequlizeSQLiteCRUDBook.js
-//Test with Postman
-
-const express = require('express');
-const Sequelize = require('sequelize');
-const bodyParser = require('body-parser');
-const { mongo, default: mongoose } = require('mongoose');
-
-//Database connection
-mongoose.connect(
-    "mongodb://admin:MALpoo27910@node59038-bestt.proen.app.ruk-com.cloud:11899",
-{
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-}
-
-);
+const express = require('express')
+const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 
 
-const sequelize = new Sequelize(dbUrl);
-//set db url
-//create a connection to the database
-// const sequelize = new Sequelize('database' , 'username' , 'password' ,{
-//     host: 'localhost',
-//     dialect: 'sqlite',
-//     storage: './Database/SQBooks.sqlite'
-// });
+mongoose.connect( // ถ้าจะรันในRukcom ไม่ต้องมีเลขตามหลัง แต่ถ้ารัน local ต้องมีเลขตามหลัง
+    "mongodb://admin:MALpoo27910@node59038-bestt.proen.app.ruk-com.cloud", {
+        useNewUrlParser: true,
+        useUnifiedtopology: true,
+    }
+)
 
-//define the Book model
-const Book = mongoose.model('book' ,{
+const Book = mongoose.model("Book", {
     id: {
         type: Number,
         unique: true,
@@ -37,73 +18,78 @@ const Book = mongoose.model('book' ,{
     },
     title: String,
     author: String,
-});
+})
 
-const app = express();
-app.use(bodyParser.json());
+const app = express()
+app.use(bodyParser.json())
 
-//Create
-app.post('/books' ,async (req , res) => {
+
+app.post("/books", async(req, res) => {
+
     try {
-        const lastBook = await Book.findOne().sort({id: -1 });
-        const nextId = lastBook ? lastBook.id + 1 : 1;
+
+        const lastBook = await Book.findOne().sort({ id: -1 })
+        const nextId = lastBook ? lastBook.id + 1 : 1
+
 
         const book = new Book({
-            id: nextId, //Set the custom "id" field
-            ...req.body,//Include other book data from the request body
-        });
+            id: nextId,
+            ...req.body,
+        })
 
-        await book.save();
-        res.send(book);
-    }catch (error){
-        res.status(500).send(error);
+
+        await book.save()
+        res.send(book)
+    } catch (err) {
+        res.status(500).send('Eror1')
     }
-});
+})
 
-//Red all
-app.get('/books/:id' ,async (req , res)=> {
-        try {
-const books = await Book.find();        
-            res.send(books);
-        }catch(error){
-            res.status(500).send(error);
-        }
-});
 
-//Read one
-app.get('/books/:id' ,async (req , res)=> {
+app.get('/books', async(req, res) => {
     try {
-const book = await Book.findOne({id:req.params.id});        
-        res.send(book);
-    }catch(error){
-        res.status(500).send(error);
+        const books = await Book.find()
+        res.send(books)
+    } catch (err) {
+        res.status(500).send('Error2')
     }
-});
+})
 
 
-//Update
-app.put('/books/:id' ,async (req , res)=> {
+app.get('/books/:id', async(req, res) => {
+
     try {
-const book = await Book.findOneAndUpdate({id:req.params.id},req.body,{
-    new: true,
-});        
-        res.send(book);
-    }catch(error){
-        res.status(500).send(error);
-    }
-});
+        const book = await Book.findOne({ id: req.params.id })
 
-//Delete 
-app.delete('/books/:id' ,async (req , res)=> {
+        res.send(book)
+
+    } catch (err) {
+        res.status(500).send('Error3')
+    }
+})
+
+
+app.put('/books/:id', async(req, res) => { // show create desktop
     try {
-const book = await Book.findOneAndDelete({id:req.params.id});        
-        res.send(book);
-    }catch(error){
-        res.status(500).send(error);
+        const book = await Book.findOneAndUpdate({ id: req.params.id }, req.body, {
+            new: true,
+        })
+        res.send(book)
+    } catch (err) {
+        res.status(500).send('Error4')
     }
-});
+})
 
-//start the server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT , () => 
-console.log(`Start Server at http://localhost:${PORT}...`));
+
+app.delete('/books/:id', async(req, res) => {
+    try {
+        const book = await Book.findOneAndDelete({ id: req.params.id })
+        res.send(book)
+    } catch (err) {
+        res.status(500).send('Error5')
+    }
+})
+
+
+const PORT = process.env.PORT || 3000
+app.listen(PORT, () => console.log(`Server Started at http://localhost${PORT}`))
