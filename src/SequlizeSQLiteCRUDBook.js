@@ -1,6 +1,7 @@
 const express = require('express')
 const Sequelize = require('sequelize')
 const app = express()
+const cors = require(cors)
 
 
 app.use(express.json())

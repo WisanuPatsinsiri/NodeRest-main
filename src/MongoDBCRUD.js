@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const cors = require(cors)
 
 
 mongoose.connect( // ถ้าจะรันในRukcom ไม่ต้องมีเลขตามหลัง แต่ถ้ารัน local ต้องมีเลขตามหลัง
