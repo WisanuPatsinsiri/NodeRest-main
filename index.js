@@ -2,13 +2,12 @@ const express = require('express')
 const Sequelize = require('sequelize')
 const app = express()
 const cors = require(cors)
-//https://github.com/Thanthiti/NodeJS
-// 
 
 app.use(express.json())
 app.use(cors())
 
-const dbUrl = 'postgres://webadmin:YLMino65033@node59039-bestt.proen.app.ruk-com.cloud:11901/Books'
+const dbUrl = 'postgres://webadmin:YLMino65033@node59039-bestt.proen.app.ruk-com.cloud/Books'
+//const dbUrl = 'postgres://webadmin:YLMino65033@node59039-bestt.proen.app.ruk-com.cloud:11901/Books'
 const sequelize = new Sequelize(dbUrl);
 
 
