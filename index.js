@@ -1,14 +1,17 @@
 const express = require('express')
 const Sequelize = require('sequelize')
 const app = express()
-const cors = require('cors')
+const cors = require(cors)
+
 
 app.use(express.json())
-app.use(cors())
 
-const dbUrl = 'postgres://webadmin:YLMino65033@node59039-bestt.proen.app.ruk-com.cloud/Books'
-//const dbUrl = 'postgres://webadmin:YLMino65033@node59039-bestt.proen.app.ruk-com.cloud:11901/Books'
-const sequelize = new Sequelize(dbUrl);
+
+const sequelize = new Sequelize('database','usename','password',{
+    host:"localhost",
+    dialect:"sqlite",
+    storage:"./Database/SQBooks.sqlite"
+})
 
 
 const Book = sequelize.define("book",{
